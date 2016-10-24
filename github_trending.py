@@ -19,7 +19,7 @@ def get_trending_repositories(top_size=5, days_count=7):
         return None
     response_json = response.json()
     for repository in response_json['items'][:top_size]:
-        yield (repository['owner']['login'], repository['name'], repository['html_url'])
+        yield repository['owner']['login'], repository['name'], repository['html_url']
 
 
 def get_open_issues_amount(repo_owner, repo_name):
@@ -33,8 +33,7 @@ def get_open_issues_amount(repo_owner, repo_name):
     success_code = 200
     if response.status_code != success_code:
         return None
-    response_json = response.json()
-    return len(response_json)
+    return len(response.json())
 
 
 def parse_arguments():
@@ -56,6 +55,6 @@ if __name__ == '__main__':
     for repository in repositories:
         repo_owner, repo_name, repo_link = repository
         reply_string = 'Repository "{}" of user "{}" has {} open' \
-                       'issues and pull requests. Link: {}'.\
-            format(repo_name, repo_owner, get_open_issues_amount(repo_owner, repo_name), repo_link)
+                       'issues and pull requests. Link: {}'\
+            .format(repo_name, repo_owner, get_open_issues_amount(repo_owner, repo_name), repo_link)
         print(reply_string)
