@@ -18,9 +18,8 @@ def get_trending_repositories(top_size=5, days_count=7):
     if response.status_code != success_code:
         return None
     response_json = response.json()
-    top_repositories = [(repository['owner']['login'], repository['name'], repository['html_url'])
-                        for repository in response_json['items'][:top_size]]
-    return top_repositories
+    for repository in response_json['items'][:top_size]:
+        yield (repository['owner']['login'], repository['name'], repository['html_url'])
 
 
 def get_open_issues_amount(repo_owner, repo_name):
