@@ -7,6 +7,7 @@ def get_trending_repositories(top_size=5, days_count=7):
     """
     Finds %top_size% repositories with the largest amount of stars
     created in the last %days_number% days.
+    :returns (username, repo_name, repo_link) generator
     """
     delay = datetime.timedelta(days=days_count)
     earliest_date = datetime.date.today() - delay
@@ -24,8 +25,8 @@ def get_trending_repositories(top_size=5, days_count=7):
 
 def get_open_issues_amount(repo_owner, repo_name):
     """
-    Finds repository called %repo_name% of user %repo_owner%.
-    Counts open issues and open pull requests.
+    Finds repository called %repo_name% of user %repo_owner% and counts its open issues.
+    :returns open issues count.
     """
     payload = {'state': 'open'}
     base = 'https://api.github.com/repos/{}/{}/issues'.format(repo_owner, repo_name)
@@ -33,7 +34,8 @@ def get_open_issues_amount(repo_owner, repo_name):
     success_code = 200
     if response.status_code != success_code:
         return None
-    return len(response.json())
+    issues = list(filter(lambda x: 'pull_request' not in x, response.json()))
+    return len(issues)
 
 
 def parse_arguments():
