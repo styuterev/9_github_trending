@@ -56,7 +56,6 @@ if __name__ == '__main__':
         raise SystemExit
     for repository in repositories:
         repo_owner, repo_name, repo_link = repository
-        reply_string = 'Repository "{}" of user "{}" has {} open' \
-                       'issues and pull requests. Link: {}'\
+        reply_string = 'Repository "{}" of user "{}" has {} open issues. Link: {}'\
             .format(repo_name, repo_owner, get_open_issues_amount(repo_owner, repo_name), repo_link)
         print(reply_string)
