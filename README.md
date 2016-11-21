@@ -8,6 +8,7 @@ The result looks this way (for each repository in the top list):
 ### Parameters:   
 **--count** - the amount of repositories to show, default = 5   
 **--time** - maximum age of repositories (in days), default = 7   
+**--exclude_pull_requests** - counts only issues, ignores pull requests   
 
 ### Usage examples:
 
@@ -15,9 +16,9 @@ The result looks this way (for each repository in the top list):
 
 This shows eight most 'starred' repositories created in the last fortnight.   
 
-> python github_trending.py --count 2   
+> python github_trending.py --count 2 --exclude_pull_requests   
 
-This shows two most trending repositories not older than a week.
+This shows two most trending repositories not older than a week, and only issues are displayed.
 
 ### P.S.
 
